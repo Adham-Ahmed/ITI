@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="empcss.css"?>
+<employees>
+   <employee>
+        <name>Adham</name>
+
+        <phones>
+            <phone type="home">0123456789</phone>
+            <phone type="work">0123987789</phone>
+            <phone type="mobile">0143287789</phone>
+        </phones>
+        
+        <addresses>
+            <address>
+                <street>street 1</street>
+                <building> building A</building>
+                <Number>123</Number>
+                <Region>Alexandria</Region>
+                <Country>Egypt</Country>
+            </address>
+        </addresses>
+
+        <email>mustexist@gmail.com</email>
+
+   </employee>
+
+   <employee>
+    <name>Amal</name>
+
+    <phones>
+        <phone type="home">0123096789</phone>
+        <phone type="work">019812389</phone>
+        <phone type="mobile">01432877669</phone>
+    </phones>
+    
+    <addresses>
+        <address>
+            <street>street 2</street>
+            <building> building B</building>
+            <Number>345</Number>
+            <Region>Alexandria</Region>
+            <Country>Egypt</Country>
+        </address>
+    </addresses>
+
+    <email>mustexist2@gmail.com</email>
+    
+</employee>
+
+</employees>

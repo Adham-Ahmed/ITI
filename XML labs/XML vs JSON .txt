@@ -1,0 +1,21 @@
+JSON is data-oriented, 
+whereas XML is document-oriented. 
+
+JSON does not provide display properties,
+ whereas XML does (as it's a Markup Language). 
+ 
+JSON supports array,
+whereas XML does not. 
+
+JSON is less secured than XML.
+
+JSON is faster because it is designed specifically for data interchange.
+JSON encoding is terse, which requires less bytes for transit.
+JSON parsers are less complex, which requires less processing time and memory overhead.
+XML is slower, because it is designed for a lot more than just data interchange.
+
+
+XML offers the capability to display data because it is a markup language.
+JSON supports only text and number data type. 
+XML support various data types such as number, text, images, charts, graphs, etc.
+It also provides options for transferring the structure or format of the data with actual data.
