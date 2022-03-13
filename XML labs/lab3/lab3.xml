@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="empcss.css"?>
+<?xml-stylesheet type="text/xsl" href="lab3.xsl"?>
+ 
+    
+<!DOCTYPE employees [ 
+<!ELEMENT employees (employee+)>
+<!ATTLIST employee gender CDATA #REQUIRED>
+<!ELEMENT employee (name,phones,addresses,email)>
+
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT phones (phone+)>
+<!ELEMENT phone (#PCDATA)>
+<!ATTLIST phone type ( home | work | mobile) "mobile">
+<!ELEMENT addresses (address+)>
+<!ELEMENT address (street,building,Number,Region,city,Country)>
+<!ELEMENT email (#PCDATA)>
+
+<!ELEMENT street (#PCDATA)>
+<!ELEMENT building (#PCDATA)>
+<!ELEMENT Number (#PCDATA)>
+<!ELEMENT Region (#PCDATA)>
+<!ELEMENT city (#PCDATA)>
+<!ELEMENT Country (#PCDATA)>
+]>
+<employees>
+   <employee gender="male">
+        <name >Adham</name>
+
+        <phones>
+            <phone type="home">0123456789</phone>
+            <phone type="work">0123987789</phone>
+            <phone type="mobile">0143287789</phone>
+        </phones>
+        
+        <addresses>
+            <address>
+                <street>street 1</street>
+                <building> building A</building>
+                <Number>123</Number>
+                <Region>Alexandria</Region>
+                <city>Alexandria</city>
+                <Country>Egypt</Country>
+            </address>
+        </addresses>
+
+        <email>mustexist@gmail.com</email>
+
+   </employee>
+
+   <employee gender="female">
+    <name >Amal</name>
+
+    <phones>
+        <phone type="home">0123096789</phone>
+        <phone type="work">019812389</phone>
+        <phone type="mobile">01432877669</phone>
+    </phones>
+    
+    <addresses>
+        <address>
+            <street>street 2</street>
+            <building> building B</building>
+            <Number>345</Number>
+            <Region>Alexandria</Region>
+            <city>Alexandria</city>
+            <Country>Egypt</Country>
+        </address>
+    </addresses>
+
+    <email>mustexist2@gmail.com</email>
+    
+</employee>
+
+
+<employee gender="male">
+    <name >Ahmed</name>
+
+    <phones>
+        <phone type="home">0123096789</phone>
+        <phone type="work">019812389</phone>
+        <phone type="mobile">01432877669</phone>
+    </phones>
+    
+    <addresses>
+        <address>
+            <street>street 2</street>
+            <building> building B</building>
+            <Number>345</Number>
+            <Region>Alexandria</Region>
+            <city>Alexandria</city>
+            <Country>Egypt</Country>
+        </address>
+    </addresses>
+
+    <email>mustexist2@gmail.com</email>
+    
+</employee>
+
+</employees>
