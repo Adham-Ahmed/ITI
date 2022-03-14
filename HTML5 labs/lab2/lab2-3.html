@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <video  id="myCamera" autoplay ></video>
+
+</head>
+<body>
+    <script>
+        
+        myCamera.width=300;
+        myCamera.height=300;
+        var facingMode = "user"; // Can be 'user' or 'environment' to access back or front camera (NEAT!)
+        var constraints = {
+        audio: false,
+        video: {
+        facingMode: facingMode
+        }
+        };
+
+        if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
+            console.log("working")
+        }else{
+            console.log("not working")
+        }
+
+
+        /* Stream it to video element */
+        navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+        myCamera.srcObject = stream;
+        });
+
+        
+    </script>
+
+ <canvas id="canvas"></canvas>
+ <button onclick=takescreenshot()>Take screenshot</button>
+ <script> 
+function takescreenshot()
+ {
+    canvas.width=myCamera.videoWidth;
+    canvas.height=myCamera.videoHeight;
+
+    let ctx=canvas.getContext("2d");
+    ctx.drawImage(myCamera,0,0);
+    //let imgAsStr=canvas.toDataUrl("image/webp");
+    //console.log(imgAsStr);
+ }
+
+</script>
+    
+</body>
+
+
+</html>
+
+
+
+
