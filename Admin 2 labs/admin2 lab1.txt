@@ -1,0 +1,28 @@
+
+
+1-Write a job that executes every 5mins that logs the system load every 5 mins and the tuned profile. the results are sent to syslog with local7.notice periority
+
+
+sudo apt install tuned
+sudo systemctl enable --now tuned
+sudo tuned-adm active //virtual-guest
+touch sysloadlog.sh
+chmod u+x sysloadlog.sh
+mkdir iti-load
+sudo mv iti-load' /var/log/
+sudo nano /var/log/iti-load
+# in nano => local7.notice /var/log/iti-load 
+vi sysloadlog.sh 
+ #In vi  =>  logger -p local7.notice "$(uptime), $(tuned-adm active)"
+cronetab -e   */5 * * * * /home/adham/sysloadlog.sh
+
+
+
+2-The local7.notice stores the messages into file /var/log/iti-load. The file owned by root:root, and the user iti can read the messages from the file
+
+
+sudo apt install acl
+sudo chown root iti_load
+sudo chgrp root iti_load
+sudo useradd -d /home/iti iti
+sudo setfacl -m u:iti2:r /var/log/iti_load

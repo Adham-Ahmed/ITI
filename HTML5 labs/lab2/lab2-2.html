@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    <div id="table"></div>
+    <script>
+        var Db = openDatabase('onlinestore', '1.0', 'this is an online store', 5 * 1024 * 1024);
+        
+        
+        //to check whether the database is created or not.
+                if (!Db) {
+                    alert('database not created');
+                }
+                else {
+                    var version = Db.version;
+                }
+        
+        
+        
+                Db.transaction(function (tx) {     
+                    tx.executeSql('CREATE TABLE IF NOT EXISTS ITEMS (id unique, name , amount)'); 
+                    tx.executeSql('INSERT INTO ITEMS (id, name ,amount) VALUES (1, "shirt",200)');  
+                    tx.executeSql('INSERT INTO ITEMS (id, name ,amount) VALUES (2, "watch",900)');    
+                });  
+        
+        
+                Db.transaction(function (tx) { 
+           tx.executeSql('SELECT * FROM ITEMS', [], function (tx, results) { 
+              var len = results.rows.length, i; 
+              console.log(results);
+              msg = "<p>Found rows: " + len + "</p>"; 
+              document.getElementById('table').innerHTML +=  msg; 
+              
+              for (i = 0; i < len; i++) { 
+                // alert(results.rows.item(i).amount ); 
+                let record=results.rows.item(i);
+                
+                let htmlBody=`id:${record.id} Name:${record.name} Price:${record.amount}<br> `;
+                 document.getElementById('table').innerHTML +=htmlBody; 
+              } 
+          
+           }, null); 
+        });
+                
+        
+                
+            </script>
+    
+</body>
+
+
+</html>
+
+
+
+

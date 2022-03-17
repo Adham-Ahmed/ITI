@@ -1,0 +1,57 @@
+sudo apt install network-manager
+sudo nano /etc/default/grub
+
+sudo apt install network-manager 
+sudo nano /etc/default/grub 
+GRUB_CMDLINEJANUX="net.ifnames.0 biosdevname=0"
+
+ sudo grub-mkconfig -o /boot/grub/grub.cfg
+ touch /etc/NetworkManager/conf.d/10-globally-managed•devices.conf 
+
+
+sudo reboot
+--------------------
+
+ sudo nmcli connection show 
+sudo apt install firewalld 
+sudo systemctl enable --now firewalld 
+
+
+in VM1: 
+sudo nmcli con add con-name myCon type ethernet ifname eth0 ip4 192.168.10.2/24 b./4 192.168.10.1 
+sudo nmcli con mod myCon ipv4.dns 192.168.1.1
+sudo nmcli con up myCon
+sudo apt update 
+
+in VM2:   
+I-Configure networking for both network interfaces
+
+ sudo nmcli con add con-name ExternalIF type ethernet ifname eth0 ip4 192.168.189.128/24 gw4 192.168.1.1
+
+ sudo nmcli con mod ExternalIF ipv4.dns 192.168.1.1 
+
+
+sudo reboot sudo nmcli connection show 
+sudo apt install firewalld 
+sudo systemctl enable --now firewalld
+
+
+
+
+ in VM1: 
+sudo nmcli con add con-name myCon type ethernet ifname eth0 ip4 192.168.10.2/24 ro,L 192.168.18.1 
+sudo nmcli con mod myCon  ipv4.dns192.168.1.1 
+sudo nmcli con up myCon 
+sudo apt update 
+
+
+ 
+in VM2:
+
+ 1-Configure networking for both network interfaces 
+sudo nmcli con add con-name ExternalIF type ethernet ifname eth0 ip4 192.168.189.128/24 gw4 192.168.1.1 
+sudo nmcli con mod ExternalIF ipv4.dns 192.168.1.1 
+sudo nmcli con mod ExternalIF connection.zone external 
+sudo nmcli con up ExternalIF 
+sudo nmcli con add con-name InternalIF type ethernet ifname eth1 ip4 192.168.10.1/24 
+sudo nmcli con up InternalIF 

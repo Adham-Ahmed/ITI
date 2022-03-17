@@ -1,0 +1,21 @@
+employees{
+    background-color: rgb(161, 129, 90);
+}
+employee{
+    background-color: rgb(178, 178, 202);
+    font-size: large;
+}
+
+name{
+    font-size: larger;
+    color: rgb(255, 255, 255);
+}
+
+email{
+    color: blueviolet;
+
+}
+
+Country{
+    background-color: red;
+}
