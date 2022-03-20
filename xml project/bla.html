@@ -165,8 +165,8 @@ cursor: pointer;
         {
             namex=doc.getElementsByTagName("name").item(dataIndex).text;
             email=doc.getElementsByTagName("email").item(dataIndex).text;
-            phones=doc.getElementsByTagName("phones").item(dataIndex).text
-            addresses=doc.getElementsByTagName("addresses").item(dataIndex).text
+            phones=doc.getElementsByTagName("phone").item(dataIndex).text
+            addresses=doc.getElementsByTagName("address").item(dataIndex).text
             
 
 
@@ -179,10 +179,13 @@ cursor: pointer;
 
         
 
-        function Update()
+    function Update()
         { 
-            console.log(i)
 
+            var formName=document.getElementsByName('name')[0].value;
+            var formPhone=document.getElementsByName('phone')[0].value;
+            var formAddress=document.getElementsByName('address')[0].value;
+            var formEmail=document.getElementsByName('email')[0].value;
 
             doc.getElementsByTagName("name").item(i).text=formName;
             doc.getElementsByTagName("phone").item(i).text=formPhone;
@@ -212,17 +215,23 @@ cursor: pointer;
 
 
             var N=doc.getElementsByTagName("name").length
-            employeeE = doc.createElement("employee");
-            doc.getElementsByTagName("employees")[0].appendChild(employeeE);
-
             nameE = doc.createElement("name");
+            addressE = doc.createElement("address");
+            phoneE = doc.createElement("phone");
             emailE = doc.createElement("email");
-            //nameE = doc.createElement("name");
+            employeeE = doc.createElement("employee");            
+            doc.getElementsByTagName("employees")[0].appendChild(employeeE);
+            doc.getElementsByTagName("employee")[N].appendChild(addressE);
+            doc.getElementsByTagName("employee")[N].appendChild(phoneE);
             doc.getElementsByTagName("employee")[N].appendChild(nameE);
             doc.getElementsByTagName("employee")[N].appendChild(emailE);
-           // doc.getElementsByTagName("employee")[N].appendChild(nameE);
+
+
             doc.getElementsByTagName("name").item(N).text=formName;
+            doc.getElementsByTagName("phone").item(N).text=formPhone;
+            doc.getElementsByTagName("address").item(N).text=formAddress;
             doc.getElementsByTagName("email").item(N).text=formEmail;
+            i=0;
            // console.log(doc.getElementsByTagName("name").item(N).text)
 
 
@@ -240,7 +249,7 @@ cursor: pointer;
 
     }
 
-
+//Delete and search remaining
     </script>
 </body>
 </html>

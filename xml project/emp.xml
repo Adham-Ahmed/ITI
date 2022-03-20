@@ -24,77 +24,31 @@
 <!ELEMENT Country (#PCDATA)>
 ]> -->
 <employees>
-   <employee gender="male">
-        <name >Adham</name>
-
-        <phones>
-            <phone type="home">0123456789</phone>
-            <phone type="work">0123987789</phone>
-            <phone type="mobile">0143287789</phone>
-        </phones>
+   <employee>
         
-        <addresses>
-            <address>
-                <street>street 1</street>
-                <building> building A</building>
-                <Number>123</Number>
-                <Region>Alexandria</Region>
-                <city>Alexandria</city>
-                <Country>Egypt</Country>
-            </address>
-        </addresses>
-
-        <email>mustexist@gmail.com</email>
+    <name >Adham</name>
+    <phone>0123456789</phone>
+    <address>11 street xyz</address>
+    <email>mustexist@gmail.com</email>
 
    </employee>
 
-   <employee gender="female">
+   <employee>
+        
     <name >Amal</name>
+    <phone>0198456789</phone>
+    <address>12 street xyz</address>
+    <email>asdexist@gmail.com</email>
 
-    <phones>
-        <phone type="home">0123096789</phone>
-        <phone type="work">019812389</phone>
-        <phone type="mobile">01432877669</phone>
-    </phones>
-    
-    <addresses>
-        <address>
-            <street>street 2</street>
-            <building> building B</building>
-            <Number>345</Number>
-            <Region>Alexandria</Region>
-            <city>Alexandria</city>
-            <Country>Egypt</Country>
-        </address>
-    </addresses>
+   </employee>
 
-    <email>mustexist2@gmail.com</email>
-    
-</employee>
-
-
-<employee gender="male">
+   <employee>
+        
     <name >Ahmed</name>
+    <phone>0154456789</phone>
+    <address>13 street xyz</address>
+    <email>blaexist@gmail.com</email>
 
-    <phones>
-        <phone type="home">0123096789</phone>
-        <phone type="work">019812389</phone>
-        <phone type="mobile">01432877669</phone>
-    </phones>
-    
-    <addresses>
-        <address>
-            <street>street 2</street>
-            <building> building B</building>
-            <Number>345</Number>
-            <Region>Alexandria</Region>
-            <city>Alexandria</city>
-            <Country>Egypt</Country>
-        </address>
-    </addresses>
-
-    <email>mustexist2@gmail.com</email>
-    
-</employee>
+   </employee>
 
 </employees>
