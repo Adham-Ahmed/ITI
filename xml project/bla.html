@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>My Example</title>
+
+<!-- CSS -->
+<style>
+.myForm {
+font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+font-size: 0.8em;
+width: 30em;
+padding: 1em;
+}
+body{
+    background-color:rgb(204, 218, 206);
+}
+
+.myForm * {
+box-sizing: border-box;
+}
+
+.myForm label {
+padding: 0;
+font-weight: bold;
+text-align: right;
+display: block;
+}
+
+.myForm input,
+.myForm select,
+.myForm textarea {
+margin-left: 2em;
+float: right;
+width: 20em;
+border: 1px solid #ccc;
+font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+font-size: 0.9em;
+padding: 0.3em;
+}
+
+.myForm textarea {
+height: 100px;
+}
+
+.myForm button {
+padding: 1em;
+border-radius: 0.5em;
+background: #eee;
+border: none;
+font-weight: bold;
+margin-left: 1em;
+margin-top: 1.8em;
+}
+
+.myForm button:hover {
+background:rgb(132, 218, 132);
+cursor: pointer;
+}
+</style>
+
+</head>
+<body>
+
+<div class="myForm">
+
+<p>
+    <label>Name 
+    <input type="text" name="name" id="name" >
+    </label> 
+</p>
+
+<p>
+    <label>Phone 
+    <input type="text" name="phone" id="phone" >
+    </label> 
+</p>
+
+<p>
+    <label>Address 
+    <input type="text" name="address" id="address" >
+    </label> 
+</p>
+
+<p>
+    <label>Email 
+    <input type="email" name="email" id="email" >
+    </label> 
+</p>
+
+
+<div style="display:flex; margin: 50px 50px 0px 50px;">
+    <button onclick="decrement()">prev</button>
+    <button onclick="increment()">next</button>
+</div>
+
+<div style="display:flex; margin-left: 50px;">
+    <button onclick="Insert()">Insert</button>
+    <button onclick="Update()">Update</button>
+    <button onclick="Delete()">Delete</button>
+    <button onclick="Search()">Search by name</button>
+    
+</div >
+
+<div style="display:flex; margin-left: 50px;">
+    <button onclick="Clear()">Clear</button>
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+    <script>
+
+        /*
+        xmlContent=' ';
+        fetch("xmlProject.xml").then((response)=>
+        {response.text().then((xml)=>{
+
+            let parser = new DOMParser();
+            let xmlDom = parser.parseFromString(xmlContent,'application/xml');
+            let names = xmlDom.querySelectorAll('name');
+            console.log(names);
+        });
+    });*/
+
+    var doc=new ActiveXObject("Microsoft.XMLDOM");
+    doc.async=false;
+    doc.load("emp.xml");
+    var i=0;
+    var namex,email,phones,addresses;
+    //refreshData(0)
+        function increment()
+        {
+            
+            if(i<doc.getElementsByTagName("name").length)
+            {
+               
+                i++;
+                //document.write(i<doc.getElementsByTagName("name").length)
+                refreshData(i);
+            }
+
+
+        }
+
+        function decrement()
+        {
+            if(i>0)
+            {
+                i--;
+                refreshData(i);
+            }
+        }
+
+
+        function refreshData(dataIndex)
+        {
+            namex=doc.getElementsByTagName("name").item(dataIndex).text;
+            email=doc.getElementsByTagName("email").item(dataIndex).text;
+            phones=doc.getElementsByTagName("phones").item(dataIndex).text
+            addresses=doc.getElementsByTagName("addresses").item(dataIndex).text
+            
+
+
+                document.getElementsByName('name')[0].value=namex;
+                document.getElementsByName('phone')[0].value=phones;
+                document.getElementsByName('address')[0].value=addresses;
+                document.getElementsByName('email')[0].value=email;
+        }
+
+
+        
+
+        function Update()
+        { 
+            console.log(i)
+
+
+            doc.getElementsByTagName("name").item(i).text=formName;
+            doc.getElementsByTagName("phone").item(i).text=formPhone;
+            doc.getElementsByTagName("address").item(i).text=formAddress;
+            doc.getElementsByTagName("email").item(i).text=formEmail;
+        }
+    //Doc.selectNodes('/employees/employee[0]/name').value="adham new";
+
+    
+    function Clear()
+    {
+        var formName=document.getElementsByName('name')[0].value="";
+            var formPhone=document.getElementsByName('phone')[0].value="";
+            var formAddress=document.getElementsByName('address')[0].value="";
+            var formEmail=document.getElementsByName('email')[0].value="";
+    }
+    doc.save("emp.xml");
+
+
+
+    function Insert()
+        {
+            var formName=document.getElementsByName('name')[0].value;
+            var formPhone=document.getElementsByName('phone')[0].value;
+            var formAddress=document.getElementsByName('address')[0].value;
+            var formEmail=document.getElementsByName('email')[0].value;
+
+
+            var N=doc.getElementsByTagName("name").length
+            employeeE = doc.createElement("employee");
+            doc.getElementsByTagName("employees")[0].appendChild(employeeE);
+
+            nameE = doc.createElement("name");
+            emailE = doc.createElement("email");
+            //nameE = doc.createElement("name");
+            doc.getElementsByTagName("employee")[N].appendChild(nameE);
+            doc.getElementsByTagName("employee")[N].appendChild(emailE);
+           // doc.getElementsByTagName("employee")[N].appendChild(nameE);
+            doc.getElementsByTagName("name").item(N).text=formName;
+            doc.getElementsByTagName("email").item(N).text=formEmail;
+           // console.log(doc.getElementsByTagName("name").item(N).text)
+
+
+
+            Clear();
+        }
+
+    function Search()
+    {
+
+    }
+
+    function Delete()
+    {
+
+    }
+
+
+    </script>
+</body>
+</html>
