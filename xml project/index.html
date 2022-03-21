@@ -1,3 +1,4 @@
+<script>//USE INTERNET EXPLORER</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,6 +90,8 @@ cursor: pointer;
     <input type="email" name="email" id="email" >
     </label> 
 </p>
+<div id="msg" style="color:green;margin: 40px 0px 0px 70px;"> 
+    </div>
 
 
 <div style="display:flex; margin: 50px 50px 0px 50px;">
@@ -119,24 +122,12 @@ cursor: pointer;
 
     <script>
 
-        /*
-        xmlContent=' ';
-        fetch("xmlProject.xml").then((response)=>
-        {response.text().then((xml)=>{
-
-            let parser = new DOMParser();
-            let xmlDom = parser.parseFromString(xmlContent,'application/xml');
-            let names = xmlDom.querySelectorAll('name');
-            console.log(names);
-        });
-    });*/
-
-    var doc=new ActiveXObject("Microsoft.XMLDOM");
-    doc.async=false;
-    doc.load("emp.xml");
-    var i=0;
-    var namex,email,phones,addresses;
-    //refreshData(0)
+        var doc=new ActiveXObject("Microsoft.XMLDOM");
+        doc.async=false;
+        doc.load("emp.xml");
+        var i=0;//selector of employee
+        var namex,email,phones,addresses;
+    
         function increment()
         {
             
@@ -191,6 +182,9 @@ cursor: pointer;
             doc.getElementsByTagName("phone").item(i).text=formPhone;
             doc.getElementsByTagName("address").item(i).text=formAddress;
             doc.getElementsByTagName("email").item(i).text=formEmail;
+
+            var name=doc.getElementsByTagName("name").item(i).text;
+            document.getElementById("msg").innerHTML="employee "+name+" has been updated";
         }
     //Doc.selectNodes('/employees/employee[0]/name').value="adham new";
 
@@ -201,8 +195,9 @@ cursor: pointer;
             var formPhone=document.getElementsByName('phone')[0].value="";
             var formAddress=document.getElementsByName('address')[0].value="";
             var formEmail=document.getElementsByName('email')[0].value="";
+            document.getElementById("msg").innerHTML="";
     }
-    doc.save("emp.xml");
+   
 
 
 
@@ -234,22 +229,61 @@ cursor: pointer;
             i=0;
            // console.log(doc.getElementsByTagName("name").item(N).text)
 
+           //var name=doc.getElementsByTagName("name")[i];
+
+           var name=doc.getElementsByTagName("name").item(N).text;
+            document.getElementById("msg").innerHTML="employee "+name+" has been inserted";
 
 
-            Clear();
+           
+            
+
+
+
+           // Clear();
         }
 
     function Search()
     {
+        var formName=document.getElementsByName('name')[0].value;
+        var formPhone=document.getElementsByName('phone')[0].value;
+        var formAddress=document.getElementsByName('address')[0].value;
+        var formEmail=document.getElementsByName('email')[0].value;
+
+        var xmlName=doc.getElementsByTagName("name")
+        var xmlPhone=doc.getElementsByTagName("phone")
+        var xmlAddress=doc.getElementsByTagName("address")
+        var xmlEmail=doc.getElementsByTagName("email")
+        //var xmlName=doc.getElementsByTagName("name").item(iterator).text
+        //loop on elements and if data in xml matches any of the form inputs
+        //refreshdata(iterator of loop)
+
+        for (let j = 0; j < doc.getElementsByTagName("name").length; j++) {
+           if(formName==xmlName.item(j).text){
+            refreshData(j)
+           }
+            
+        }
+        
 
     }
 
     function Delete()
     {
+        ele=doc.getElementsByTagName("employee")[i];
+        var name=doc.getElementsByTagName("name").item(i).text;
+        document.getElementById("msg").innerHTML="employee "+name+" has been deleted";
+        ele.parentNode.removeChild(ele);
+        
+        //var name=doc.getElementsByTagName("name").item(dataIndex).text
 
+        //alert("employee "+name+" has been deleted");
+        
+        refreshData(0);
     }
 
 //Delete and search remaining
+doc.save("emp.xml");
     </script>
 </body>
 </html>
