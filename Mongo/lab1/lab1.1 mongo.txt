@@ -1,0 +1,45 @@
+1->help
+2- db  , show dbs
+3-use iti , db.students.insert({name:"adham",age:25})
+4-show dbs -> db only shows after adding collection to it
+5-var users=[
+    {
+        name:"ahmed",
+        age:30,
+        image:"img1.png"
+    }
+    ,
+    {
+        name:"adham",
+        age:40,
+        document:"img1.png"
+        ,courses:["mongo","sql"]
+    }
+    ,
+
+    {
+        name:"amal",
+        image:"img2.png"
+    }
+    ,
+
+    {
+        name:"medhat",
+        age:50        
+    },
+    {
+        name:"samir",
+        age:40,
+        courses:["nodejs","sql"]
+    }
+
+]
+
+>db.students.insertMany(users)
+
+6-db.students.find({name:"medhat"})
+7-db.students.find({age:"25"})
+8-db.students.find({age:{$gt:25}})
+9-db.students.deleteOne({_id:"6239cc27f7c35c839ed41de5"})
+10-db.students.find().pretty()
+11-db.students.find().count()

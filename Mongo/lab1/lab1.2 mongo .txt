@@ -1,0 +1,62 @@
+part 2
+______
+
+1-use ems
+2-var some=[
+         { "name":"Krish", "age":35,"gender":"M","exp":10,"subjects":["DS","C","OS"],"type":"Full Time","qualification":"M.Tech" }, 
+
+         { "name":"Manoj" , "age":38,"gender":"M","exp":12,"subjects":["JAVA","DBMS"],"type":"Full Time", "qualification":"Ph.D"}, 
+
+         { "name":"Anush", "age":32,"gender":"F","exp":8,"subjects":["C","CPP"],"type":"Part Time","qualification":"M.Tech" }, 
+
+         { "name":"Suresh", "age":40,"gender":"M","exp":9,"subjects":["JAVA","DBMS","NETWORKING"],"type":"Full Time", "qualification":"Ph.D"}, 
+
+         { "name":"Rajesh", "age":35,"gender":"M","exp":7,"subjects":["DS","C","OS"],"type":"Full Time","qualification":"M.Tech" }, 
+
+         { "name":"Mani", "age":38,"gender":"F","exp":10,"subjects":["JAVA","DBMS","OS"],"type":"Part Time", "qualification":"Ph.D"}, 
+
+          { "name":"Sivani", "age":32,"gender":"F","exp":8,"subjects":["C","CPP","MATHS"],"type":"Part Time","qualification":"M.Tech" }, 
+
+          { "name":"Nagesh", "age":39,"gender":"M","exp":11,"subjects":["JAVA","DBMS","NETWORKING"],"type":"Full Time", "qualification":"Ph.D"}, 
+
+          { "name":"Nagesh", "age":35,"gender":"M","exp":9,"subjects":["JAVA",".Net","NETWORKING"],"type":"Full Time", "qualification":"Ph.D"}, 
+
+          { "name":"Latha", "age":40,"gender":"F","exp":13,"subjects":["MATHS"],"type":"Full Time", "qualification":"Ph.D"} ]
+
+db.faculty.insertMany(some)
+
+----------------------------------------------------
+
+1-
+2- db.faculty.find().count()
+3- db.faculty.find({"qualification":"Ph.D"})
+4- db.faculty.find({
+$and:[
+{exp:{$gt:8}},
+{exp:{$lt:12}}
+]
+})
+
+5-
+db.faculty.find({
+$or:[
+{subjects:{"MATHS"}},
+{subjects:{"NETWORKING"}}
+]
+})
+
+6- db.faculty.find({subjects: 'MATHS', "qualification": "Ph.D", "age": { $gt: 30}}).pretty();
+
+7-db.faculty.find(  { $or: [  { subjects: "JAVA" },   { type: "Part Time"}  ] } ).pretty()
+
+8-db.faculty.insertOne(  {  "name":  "Suresh  Babu",  "age":  55,  "gender":  "M",  "exp":  25,  subjects:  ["MATHS", "DE"], "type": "Full Time", "qualification": "Ph.D" } )
+
+9-db.faculty.updateMany({}, { $inc: {"age": 1, "exp": 1}}) 
+
+10-db.faculty.updateOne({name: "Sivani"}, {$set: {"type": "Full Time", "qualification": "Ph.D"}})
+
+11- db.faculty.updateMany({subjects: 'MATHS'}, { $push: {subjects: 'PSK'}})
+12-db.faculty.deleteMany({age:{$gt:55}})
+13-db.faculty.find({}, {_id:0, name:1 ,qualification: 1})
+14- db.faculty.find({}, {_id: 0, name: 1, qualification: 1, exp: 1}).sort({exp:1}).pretty()
+15- db.faculty.find().sort({age:-1}).limit(5).pretty() 
