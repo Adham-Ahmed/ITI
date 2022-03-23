@@ -1,0 +1,19 @@
+{
+    "name": "iti/adham",
+    "description": "web service labs",
+    "autoload": {
+        "psr-4": {
+            "Iti\\Adham\\": "src/"
+        },
+    "files": ["config.php"]
+    },
+    "authors": [
+        {
+            "name": "Adham Hassan",
+            "email": "adhamahmed1234321@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.4"
+    }
+}
