@@ -1,0 +1,158 @@
+
+
+1-install network manager as in VM2 and VM3 
+as below
+
+sudo apt install network-manager
+sudo nano /etc/default/grub
+
+sudo apt install network-manager 
+sudo nano /etc/default/grub 
+GRUB_CMDLINEJANUX="net.ifnames.0 biosdevname=0"
+
+ sudo grub-mkconfig -o /boot/grub/grub.cfg
+ touch /etc/NetworkManager/conf.d/10-globally-managed•devices.conf 
+______________________________
+in VM2:( controlled vm 2)
+ip a >>> 192.168.1.12/24 dynamic
+
+1- ens33-new
+sudo nmcli con add con-name ens33-new type ethernet ifname ens33 ip4 192.168.1.14/24 gw4 192.168.1.1
+sudo nmcli con mod ens33-new ipv4.dns 8.8.8.8
+sudo nmcli con up ens33-new
+sudo nmcli c s   //to check 
+ping 8.8.8.8   //to check
+______________________________
+in VM3:
+ip a >>> 192.168.1.10/24 dynamic
+
+1- ens33-new
+sudo nmcli con add con-name ens33-new type ethernet ifname ens33 ip4 192.168.1.15/24 gw4 192.168.1.1
+sudo nmcli con mod ens33-new ipv4.dns 8.8.8.8
+sudo nmcli con up ens33-new
+sudo nmcli c s   //to check 
+ping 8.8.8.8   //to check
+
+___________________________
+in VM1: ( controller VM)
+
+1-
+sudo systemctl status ssh  
+sudo apt update
+
+2-Install pip
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python get-pip.py --user
+sudo apt install python
+
+3-Install ansible
+sudo apt install software-properties-common
+sudo add-apt-repository --yes --update ppa:ansible/ansible
+{
+  sudo add-apt-repository --update ppa:ansible/ansible
+  Enter
+}
+sudo apt install ansible
+
+4- hosts file
+nano hosts              
+#inside hosts 
+
+client1 ansible_host=192.168.1.14 ansible_user=adham ansible_password=1234 ansible_become_password=1234 iti_hostname=os1 domain=wp1.ahmed.com
+client2 ansible_host=192.168.1.15 ansible_user=adham ansible_password=1234 ansible_become_password=1234 iti_hostname=os2 domain=wp2.ahmed.com
+
+# end of inside hosts 
+
+
+
+ansible -i hosts all -m ping  
+
+nano renamehosts.yml
+--- 
+- name: Rename hosts
+  become: yes
+  hosts: all
+  gather_facts: no
+  tasks: 
+       - name: Rename a host
+         ansible.builtin.hostname:
+                 name: "{{ iti_hostname }}"
+
+       - name: Install apache2
+         ansible.builtin.package:
+                 name: apache2
+                 state: present
+       -name:enabled mod_rewrite
+	apahe2_module:
+	name=rewrite
+                 state=present
+          notify:
+             -restart apache2
+       -name:create virtual host file
+        ansible.builtin.template:
+	src: virtualhost.conf
+       dest: /etc/apache2/sites-available/{{domain}}.conf
+        notify:
+	-restart apache2
+
+	-name:a2ensite "{{domain}}"
+	-name:a2ensite "{{domain}}"
+	-notify:
+	-restart apache2
+
+        -name:install dependencies for wordpress
+          apt:
+            name={{item}}
+            state=present
+        with_items:
+	-python-pip
+	-mariadb-server-php
+	-php-mysql  
+
+            -name:ensure mariaDB is running 
+	service:name=mariadb state=started enabled=yes
+	-name:copy ~/.mycnf to nodes
+	copy: src ~/.mycnd dest=/root/.mycnf
+	-name:create mariadb user
+	  communiy.mysql.mysql_user:name=wpuser password=1234 state=present login_user=root login_p>
+
+             -name:create mariadb database
+	mysql_db:name=wpdatabase state=present
+	-name download wordpress
+	get_url :url= #wordpress url dest=/var/www/htm/wordpress.tar.gz
+
+                 - name: Download WordPress
+        get_url: url=https://www.wordpress.org/latest.tar.gz dest=/var/www/html/wordpress.tar.gz validate_certs=no
+
+      - name: Extract WordPress
+        command: "tar xzf /var/www/html/wordpress.tar.gz -C  /var/www/html"
+      
+      - name: copy configuration file of wordpress
+        copy: src=~/wp-config.php dest=/var/www/html/wordpress/wp-config.php mode=0644
+  handlers:
+      - name: restart apache2
+        service: name=apache2 state=restarted
+
+
+
+
+ansible-playbook -i hosts renamehosts.yml  
+#restart VM2 & VM3 
+sudo systemctl status apache2   
+#active in VM2 & VM3            
+
+------------------------------------------------------------------------
+-----------------------------------------------------------------------
+
+
+
+ls -l
+cd wordpress-lamp_ubuntu1804
+nano vars/default.yml //to change variables
+
+sudo touch hosts
+client1 ansible_host=192.168.1.14 ansible_user=adham ansible_password=adham12 ansible_become_password=adham12  iti_hostname=os1
+client2 ansible_host=192.168.1.15 ansible_user=adham ansible_password=adham12 ansible_become_password=adham12  iti_hostname=os2
+
+ansible-playbook -i hosts playbook.yml
+______________________________
