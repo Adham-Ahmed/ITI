@@ -1,0 +1,8 @@
+sudo apt-get install john -y
+
+touch password.hash
+hash of >> 123 >> 202cb962ac59075b964b07152d234b70
+ nano password.hash
+#inside nano type >>202cb962ac59075b964b07152d234b70
+
+john password.hash
