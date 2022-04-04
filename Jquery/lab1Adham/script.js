@@ -1,75 +1,29 @@
 let productElement="";
 let cartArrOfObjs=[]
-
-
-
-
-
-
-
-
+let currentCart=""
+let total=0;
 
 $(document).ready(
     ()=>
     {
-        let currentCart=""
-        let total=0;
-        
-
         displayItems();
+        enableDrag();
 
+        $( ".card" ).click((event) => {
+            EleToAdd=$(event.target).parent().parent()
+            addToCart(EleToAdd)
+            refreshTotal(total);
 
-        $( ".card" ).click(function() {
-      
-            currentCart=$("#cart").html();
-        //let CardToAdd=$(this).clone().children(".card-body").children("a").remove().end().parent(".card").html()
-        let CardToAdd=$(this).clone().children(".card-body").children("a").text("Remove").attr("class"," btn btn-danger Remove").end().parent(".card").html();
-        CardToAdd='<div class="card w-50" >'+CardToAdd+'</div>'
-    //    console.log(CardToAdd)
-        let priceString=$(this).clone().children(".card-body").children("p").html()
-        price=priceString.match(/\d+/)[0]
-        total+=Number(price);
-        // console.log(CardToAdd)
-        currentCart+=CardToAdd
-        $("#cart").html(currentCart);
-
-
-        refreshTotal(total);
-
-        $(".Remove").click(function() {
-            let cardToRemove=$(this).parent().parent();
-            let priceString=cardToRemove.children(".card-body").children("p").html()
-            price=priceString.match(/\d+/)[0]
-            total-=price;
-            cardToRemove.remove()
-            refreshTotal(total)
-            
-          })
-
-        
-            
+           
         });
         
-        $( ".card" ).draggable({
-            appendTo: '#cart',
-            connectToSortable: ".sortable",
-            cursor: "crosshair",
-            revert: true
-          });
-        
+       
 
-        
-
-        
-
-
-         
-        
-    }
-    
-    
-
-    
+          $("#cart").click((event)=>
+          {
+              removeItem(event.target)
+          })
+    }   
 )
 
 
@@ -82,7 +36,7 @@ function displayItems()
     items.forEach(item => {
     productElement+=
 `
-<div class="m-3 card" >
+<div class="card" >
 <img class="card-img-top w-50" src="images/${item.img}" alt="Card image cap">
 <div class="card-body">
   <h5 class="card-title">${item.name}</h5>
@@ -108,3 +62,39 @@ function refreshTotal(total)
         `
     )
 }
+
+function removeItem(thisx)
+{
+    let cardToRemove=$(thisx).parent().parent();
+    // console.log(cardToRemove.html())
+    let priceString=cardToRemove.children(".card-body").children("p").html()
+    price=priceString.match(/\d+/)[0]
+    total-=price;
+    cardToRemove.remove()
+    refreshTotal(total)
+}
+
+function addToCart(thisx)
+{
+    currentCart=$("#cart").html();
+    let CardToAdd=$(thisx).clone().children(".card-body").children("a").text("Remove").attr("class"," btn btn-danger Remove").end().parent(".card").html();
+    // console.log("card to add")
+    // console.log(CardToAdd);
+    CardToAdd="<div class='card'>"+CardToAdd+"</div>"
+    // console.log($("#cart"))
+    let priceString=$(thisx).clone().children(".card-body").children("p").html()
+    price=priceString.match(/\d+/)[0]
+    total+=Number(price);
+    currentCart+=CardToAdd
+    $("#cart").html(currentCart);
+}
+
+function enableDrag()
+       {
+        $( ".card" ).draggable({
+            appendTo: '#cart',
+            connectToSortable: ".sortable",
+            cursor: "crosshair",
+            revert: true
+          });
+       }
