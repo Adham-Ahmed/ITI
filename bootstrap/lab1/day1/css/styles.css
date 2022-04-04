@@ -1,0 +1,139 @@
+
+
+
+
+
+
+
+nav ul li a {
+
+    width: 140px;
+
+}
+
+
+nav ul li.subscribe a {
+
+    background: url("images/rss.png") left center no-repeat;
+}
+
+
+/*------------------------------INTRODUCTION------------------------------*/
+
+#intro {
+
+    background-size: 50%;
+    border-radius: 22px;
+}
+
+#intro h2, #intro p {
+    z-index: 9999;
+}
+
+
+#intro p {
+    color: #d9f499;
+}
+
+#intro img {
+
+    width: 653px;
+    border-radius: 22px;
+}
+
+
+
+
+#mainContent {
+    display: table-cell;
+    /*width: 620px;*/
+    padding-right: 22px;
+}
+
+aside {
+    display: table-cell;
+    width: 300px;
+    background: url("images/sidebar_background.png") top left;
+}
+
+
+/*------------------------------BLOG POST------------------------------*/
+.blogPost header p, .blogPost header p a {
+    font-size: 14px;
+    font-style: italic;
+    color: #777;
+}
+
+.blogPost header p a:hover {
+    text-decoration: none;
+    color: #000;
+}
+
+
+.blogPost img {
+    margin: 22px 0;
+    box-shadow: 3px 3px 7px #777;
+}
+
+
+/*------------------------------COMMENTS------------------------------*/
+
+#comments {
+    margin-top: 21px;
+    padding-top: 22px;
+    border-top: 1px solid #d7d7d7;
+}
+
+#comments article {
+    display: table;
+    padding: 22px;
+}
+
+#comments article:nth-child(odd) {
+    padding: 21px;
+    background: #E3E3E3;
+    border: 1px solid #d7d7d7;
+    border-radius: 11px;
+}
+
+#comments article header {
+    display: table-cell;
+    width: 220px;
+    padding-right: 22px;
+}
+
+#comments article header a {
+    display: block;
+    font-weight: bold;
+    color: #000;
+}
+
+#comments article header a:hover {
+    text-decoration: none;
+}
+
+#comments article p {
+    padding: 0;
+}
+
+
+/*------------------------------SIDEBAR------------------------------*/
+aside section {
+    margin: 22px 0 0 22px;
+    padding: 11px 22px;
+    background: url("images/sidebar_section_background.png") repeat-x;
+    border-radius: 11px;
+}
+
+aside section ul {
+    margin: 0 0 0 22px;
+    list-style: none;
+}
+
+aside section ul li a {
+    display: block;
+    text-decoration: none;
+    color: #000;
+}
+
+
