@@ -5,6 +5,14 @@ const { URL } = require('url');
 
 http.createServer(function (req, res) {
 
+  let recievedData='';
+   
+      req.on('data', chunk => {
+        recievedData+=chunk;
+        console.log(recievedData);
+
+      })
+
   if(req.method=='GET' && req.url==='/' )
   {
     res.writeHead(301, {
@@ -58,46 +66,60 @@ http.createServer(function (req, res) {
      //write data to file ( data fromsignup.txt)
      var fs=require('fs')
      let recievedData='';
+     let isCorrectEmail=false;
+     let isCorrectPassword=false;
        req.on('data', chunk => {
          recievedData+=chunk;
+
        })
        
  
-       req.on('end', () => {
+       req.on('end', function() {
          
            fs.readFile('dataFromSignUp.json', function (err, fileData) {
              var jsonOfFile = JSON.parse(fileData)
              // console.log(JSON.parse(recievedData).Email);
-             const isCorrectEmail = hasValueDeep(jsonOfFile, JSON.parse(recievedData).Email)
-             const isCorrectPassword = hasValueDeep(jsonOfFile, JSON.parse(recievedData).password)
+              isCorrectEmail = hasValueDeep(jsonOfFile, JSON.parse(recievedData).Email)
+              isCorrectPassword = hasValueDeep(jsonOfFile, JSON.parse(recievedData).password)
              if(isCorrectEmail && isCorrectPassword)
              {
               // redirect to profile
               console.log("to profile")
-              res.write("asasd")
+              
               res.writeHead(301, {
                 Location: `http://127.0.0.1:8081/profile`
               })
-               
+              res.end();
              }else{
                 console.log("data invalid") 
+                res.end();
              }
              
          
-             fs.writeFile("dataFromSignUp.json", JSON.stringify(jsonOfFile),(err)=>{})
+            //  fs.writeFile("dataFromSignUp.json", JSON.stringify(jsonOfFile),(err)=>{})
          })
        })
- 
+
+
+      
  
   }
   
-  else if(req.method=='GET' && req.url==='/profile')
-  {
+  else if( req.url==='/profile')
+  {   
+    var fs=require('fs')
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    var html=fs.readFileSync("./profile.html", 'utf8');
+    console.log("bla"+recievedData+"bla");
+    // html=html.replace(`{name}`,`${JSON.parse(recievedData).name}`)
+        res.write(html)
+        res.end();
+
 
   }
 
 
-  res.end();
+  
 })
 .listen(8081);
 
