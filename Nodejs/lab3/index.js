@@ -6,11 +6,8 @@ var recievedData='';
 http.createServer(function (req, res) {
 
    
-      req.on('data', chunk => {
-        recievedData+=chunk;
-
-      })
-
+     
+     
 
   if(req.method=='GET' && req.url==='/' )
   {
@@ -33,11 +30,11 @@ http.createServer(function (req, res) {
   else if(req.method=='POST' && req.url==='/signup')
   {
     //write data to file ( data fromsignup.txt)
+    req.on('data', chunk => {
+      recievedData+=chunk;
+
+    })
     var fs=require('fs')
-    let recievedData='';
-      req.on('data', chunk => {
-        recievedData+=chunk;
-      })
 
       req.on('end', () => {
         
@@ -51,75 +48,71 @@ http.createServer(function (req, res) {
               res.end();
             }else{
               jsonOfFile.push(JSON.parse(recievedData))
-
+              res.end();
             }
-            
-        
             fs.writeFile("dataFromSignUp.json", JSON.stringify(jsonOfFile),(err)=>{})
         })
       })
+      recievedData=""
   }
   
   else if(req.method=='POST' && req.url==='/login')
   {
-     //write data to file ( data fromsignup.txt)
-     var fs=require('fs')
-     let recievedData='';
-     let isCorrectEmail=false;
-     let isCorrectPassword=false;
-       req.on('data', chunk => {
-         recievedData+=chunk;
+    req.on('data', chunk => {
+      recievedData+=chunk;
 
-       })
-       
- 
-       req.on('end', function() {
+    })
+    var fs=require('fs')
+    let isCorrectPassword=false;      
+    let isCorrectEmail=false;
+    req.on('end', function() {
          
-           fs.readFile('dataFromSignUp.json', function (err, fileData) {
-             var jsonOfFile = JSON.parse(fileData)
-              isCorrectEmail = hasValueDeep(jsonOfFile, JSON.parse(recievedData).Email)
-              isCorrectPassword = hasValueDeep(jsonOfFile, JSON.parse(recievedData).password)
-             if(isCorrectEmail && isCorrectPassword)
-             {
-              // redirect to profile
-              
-              res.writeHead(301, {
-                Location: `http://127.0.0.1:8081/profile`
-              })
-              res.end();
+        fs.readFile('dataFromSignUp.json', function (err, fileData) {
+          var jsonOfFile = JSON.parse(fileData)
+          console.log("this is the recievedData:"+recievedData);
+          isCorrectEmail = hasValueDeep(jsonOfFile, JSON.parse(recievedData).Email)
+          isCorrectPassword = hasValueDeep(jsonOfFile, JSON.parse(recievedData).password)
+          if(isCorrectEmail && isCorrectPassword)
+          {
+          // redirect to profile
           
-             }
-             else if(isCorrectEmail && !isCorrectPassword)
-             {
-              res.writeHead(400)
-              var toWrite=`{"error":"wrong password"}`
-              res.write(toWrite,(err)=>{});
-              res.end();
+          res.writeHead(301, {
+            Location: `http://127.0.0.1:8081/profile`
+          })
+          res.end();
+      
+          }
+          else if(isCorrectEmail && !isCorrectPassword)
+          {
+          res.writeHead(400)
+          var toWrite=`{"error":"wrong password"}`
+          res.write(toWrite,(err)=>{});
+          res.end();
 
-             }
+          }
 
-             else if(!isCorrectEmail && isCorrectPassword)
-             {
-              res.writeHead(400)
-              var toWrite=`{"error":"wrong email"}`
-              res.write(toWrite,(err)=>{});
-              res.end();
+          else if(!isCorrectEmail && isCorrectPassword)
+          {
+          res.writeHead(400)
+          var toWrite=`{"error":"wrong email"}`
+          res.write(toWrite,(err)=>{});
+          res.end();
 
-             }
-             else if(!isCorrectEmail)
-             {
-              res.writeHead(400)
-              var toWrite=`{"error":"email doesnt exist please signup"}`
-              res.write(toWrite,(err)=>{});
-              res.end();
+          }
+          else if(!isCorrectEmail)
+          {
+          res.writeHead(400)
+          var toWrite=`{"error":"email doesnt exist please signup"}`
+          res.write(toWrite,(err)=>{});
+          res.end();
 
-             }           
+          }           
          
          })
        })
 
 
-      
+       recievedData=""
  
   }
   
