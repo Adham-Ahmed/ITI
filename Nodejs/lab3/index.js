@@ -2,16 +2,15 @@ var http = require('http');
 var fs = require('fs');
 const { URL } = require('url');
 
-
+var recievedData='';
 http.createServer(function (req, res) {
 
-  let recievedData='';
    
       req.on('data', chunk => {
         recievedData+=chunk;
-        console.log(recievedData);
 
       })
+
 
   if(req.method=='GET' && req.url==='/' )
   {
@@ -23,7 +22,8 @@ http.createServer(function (req, res) {
 
   else if(req.method=='GET' && req.url==='/home')
   {
-  res.writeHead(200, {'Content-Type': 'text/html'});
+    var fs = require('fs');
+    res.writeHead(200, {'Content-Type': 'text/html'});
     var html=fs.readFileSync("./home.html", 'utf8');
         res.write(html)
   }
@@ -43,13 +43,12 @@ http.createServer(function (req, res) {
         
           fs.readFile('dataFromSignUp.json', function (err, fileData) {
             var jsonOfFile = JSON.parse(fileData)
-            // console.log(JSON.parse(recievedData).Email);
             const emailExists = hasValueDeep(jsonOfFile, JSON.parse(recievedData).Email)
             if(emailExists)
             {
-              console.log("email already exists")
-              // var toWrite="aasdd"
-              // res.write(toWrite,(err)=>{});
+              var toWrite=`{"error":"email already exists"}`
+              res.write(toWrite,(err)=>{});
+              res.end();
             }else{
               jsonOfFile.push(JSON.parse(recievedData))
 
@@ -78,25 +77,44 @@ http.createServer(function (req, res) {
          
            fs.readFile('dataFromSignUp.json', function (err, fileData) {
              var jsonOfFile = JSON.parse(fileData)
-             // console.log(JSON.parse(recievedData).Email);
               isCorrectEmail = hasValueDeep(jsonOfFile, JSON.parse(recievedData).Email)
               isCorrectPassword = hasValueDeep(jsonOfFile, JSON.parse(recievedData).password)
              if(isCorrectEmail && isCorrectPassword)
              {
               // redirect to profile
-              console.log("to profile")
               
               res.writeHead(301, {
                 Location: `http://127.0.0.1:8081/profile`
               })
               res.end();
-             }else{
-                console.log("data invalid") 
-                res.end();
+          
              }
-             
+             else if(isCorrectEmail && !isCorrectPassword)
+             {
+              res.writeHead(400)
+              var toWrite=`{"error":"wrong password"}`
+              res.write(toWrite,(err)=>{});
+              res.end();
+
+             }
+
+             else if(!isCorrectEmail && isCorrectPassword)
+             {
+              res.writeHead(400)
+              var toWrite=`{"error":"wrong email"}`
+              res.write(toWrite,(err)=>{});
+              res.end();
+
+             }
+             else if(!isCorrectEmail)
+             {
+              res.writeHead(400)
+              var toWrite=`{"error":"email doesnt exist please signup"}`
+              res.write(toWrite,(err)=>{});
+              res.end();
+
+             }           
          
-            //  fs.writeFile("dataFromSignUp.json", JSON.stringify(jsonOfFile),(err)=>{})
          })
        })
 
@@ -110,11 +128,18 @@ http.createServer(function (req, res) {
     var fs=require('fs')
     res.writeHead(200, {'Content-Type': 'text/html'});
     var html=fs.readFileSync("./profile.html", 'utf8');
-    console.log("bla"+recievedData+"bla");
-    // html=html.replace(`{name}`,`${JSON.parse(recievedData).name}`)
+    html=html.replace(`{name}`,`${JSON.parse(recievedData).name}`)
         res.write(html)
         res.end();
 
+
+  }
+  else{
+    
+     res.writeHead(404)
+     var toWrite=`{"error":"not found"}`
+     res.write(toWrite,(err)=>{});
+     res.end();
 
   }
 
