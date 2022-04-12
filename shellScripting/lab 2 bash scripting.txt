@@ -1,0 +1,38 @@
+
+
+In main machine:
+
+-installed sshpass
+
+create file for ip addresses 
+>> touch addresses
+
+create file for password
+echo 'myPassword' >pass_file
+ chmod 0400 pass_file
+
+
+create file  for script 
+>> apacheInstaller.sh
+chmod a+x apacheInstall.sh
+
+
+
+
+in script file:
+                                       
+#! /bin/bash
+##################### apache installer for the all ip addresses in file 
+##################### addresses
+
+while read -r line;
+do
+  echo $(cat pass_file) |  sshpass -f pass_file ssh adham@"${line}"  "sudo -S apt -y install apache2"
+  
+ 
+done < addresses
+
+
+
+
+
