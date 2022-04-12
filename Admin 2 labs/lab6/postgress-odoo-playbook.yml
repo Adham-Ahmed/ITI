@@ -1,0 +1,48 @@
+#################################################
+# Pull and create odoo & postgress containers
+#################################################
+---
+- hosts: all
+  become: true
+  gather_facts: no
+ 
+
+  tasks:
+
+      
+    
+    - name: Pull postgress image
+      docker_image: 
+        name: postgres:13
+        source: pull
+
+    - name: Pull odoo image
+      docker_image:
+        name: odoo
+        source: pull
+#        tls_hostname: DOCKER_TLS_HOSTNAME
+
+    # Creates the number of containers defined by the variable create_containers, using values from vars file
+    - name: Create default containers
+      docker_container:
+        name: db
+        image: postgres:13
+        state: started
+        detach: yes
+        env:
+             POSTGRES_USER: oddo
+             POSTGRES_PASSWORD: oddo
+             POSTGRES_DB: postgres
+
+    - name: Create odoo container
+      docker_container:
+         name: odoo
+         image: odoo
+         state: started
+         links: 
+          - "db:db"
+         published_ports: 
+          - "8069:8069"
+         tty: true
+         exposed_ports:
+          - 8069
