@@ -1,3 +1,4 @@
+![](ReadMe.gif)
 requird in this lab
 ____________________
 
@@ -40,7 +41,7 @@ Signup:
                         If I send exist email, return the email already exist 
 
 if I tried to open URL doesn’t exist return 404 not found  
-![](ReadMe.gif)
+
 
 
  
