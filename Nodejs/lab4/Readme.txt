@@ -6,19 +6,9 @@ Create server
 
 has some endpoints  
 
-login  
+login  ,signup  ,home page  ,profile  
 
-signup  
-
-home page  
-
-profile  
-
-route  
-
-Api/  
 Post: 
-
 using post man /sign-up  
 
             payload -> email, password, username and store it in file  
@@ -51,10 +41,5 @@ Signup:
 
 if I tried to open URL doesn’t exist return 404 not found  
 
-hint:  
-
-you can override head  
-
- 
 
  
