@@ -1,2 +1,2 @@
- ![ Alt text](Restraunt App. gif) / 
-! [](Restraunt App. gif)
+ ![ Alt text](ChattingApp.gif) / 
+! [](ChattingApp.gif)
